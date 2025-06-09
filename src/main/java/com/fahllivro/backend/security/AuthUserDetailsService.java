@@ -1,8 +1,7 @@
-package com.fahllivro.backend.service;
+package com.fahllivro.backend.security;
 
 import com.fahllivro.backend.model.User;
 import com.fahllivro.backend.repository.UserRepository;
-import com.fahllivro.backend.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
