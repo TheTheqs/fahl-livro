@@ -32,14 +32,22 @@ public class SecurityConfig {
                 .cors(cors -> cors.configure(http))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Login e criação de usuário são públicas
+                        // Auth e criação de usuário são públicos
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
 
-                        // Todos os outros acessos a /users precisam de autenticação
+                        // Livros - GETs públicos
+                        .requestMatchers(HttpMethod.GET, "/books/**").permitAll()
+
+                        // Livros - criação, edição e exclusão requerem autenticação
+                        .requestMatchers(HttpMethod.POST, "/books").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/books/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/books/**").authenticated()
+
+                        // Rota protegida para /users/**
                         .requestMatchers("/users/**").authenticated()
 
-                        // Qualquer outra rota não especificada será protegida por padrão
+                        // Qualquer outra rota precisa de autenticação
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
