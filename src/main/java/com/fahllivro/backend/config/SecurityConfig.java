@@ -44,6 +44,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/books/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/books/**").authenticated()
 
+                        // Chamadas - qualquer um pode criar e visualizar
+                        .requestMatchers(HttpMethod.POST, "/chamadas").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/chamadas/**").permitAll()
+
                         // Rota protegida para /users/**
                         .requestMatchers("/users/**").authenticated()
 
